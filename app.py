@@ -10,12 +10,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-import sys
-import os
 from datetime import datetime
-
-# Agregar src al path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from cundinamarca_ucs import CUNDINAMARCA_UCS, get_ucs_parameters, get_all_ucs_list
 from contaminant_catalog import CONTAMINANT_CATALOG, get_contaminant_data, get_all_contaminants
