@@ -17,21 +17,21 @@ from datetime import datetime
 # Agregar src al path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from src.cundinamarca_ucs import CUNDINAMARCA_UCS, get_ucs_parameters, get_all_ucs_list
-from src.contaminant_catalog import CONTAMINANT_CATALOG, get_contaminant_data, get_all_contaminants
-from src.transport_equations import (
+from cundinamarca_ucs import CUNDINAMARCA_UCS, get_ucs_parameters, get_all_ucs_list
+from contaminant_catalog import CONTAMINANT_CATALOG, get_contaminant_data, get_all_contaminants
+from transport_equations import (
     ogata_banks_solution, calculate_longitudinal_dispersion,
     calculate_transverse_dispersion, detect_concentration_change,
     model_concentration_profile, calculate_plume_front,
     calculate_max_concentration_zone, partition_equation,
     calculate_darcy_velocity, calculate_linear_velocity
 )
-from src.segment_modeling import (
+from segment_modeling import (
     calculate_segment_models, calculate_concentration_profile_by_segments,
     calculate_contaminant_front_progression, calculate_cross_section_concentration,
     calculate_3d_plume_detailed, calculate_attenuation
 )
-from src.plume_3d import create_3d_grid, calculate_3d_concentration, identify_plume_zones
+from plume_3d import create_3d_grid, calculate_3d_concentration, identify_plume_zones
 
 
 # Configuración de la página profesional
@@ -348,7 +348,7 @@ def model_configuration_page():
         if contaminant_type == "Todos":
             available_contaminants = get_all_contaminants()
         else:
-            from src.contaminant_catalog import get_contaminants_by_type
+            from contaminant_catalog import get_contaminants_by_type
             available_contaminants = get_contaminants_by_type(contaminant_type)
         
         contaminant_name = st.selectbox(
@@ -559,7 +559,7 @@ def segment_modeling_page():
                 V = calculate_linear_velocity(Vd, me)
                 
                 # Calcular dispersión
-                from src.soil_parameters import get_dispersivity
+                from soil_parameters import get_dispersivity
                 dispersivity = get_dispersivity(config["scale"])
                 DL = calculate_longitudinal_dispersion(dispersivity['longitudinal'] * 100, V)
                 DT = calculate_transverse_dispersion(dispersivity['transverse'] * 100, V)
@@ -726,7 +726,7 @@ def regulatory_page():
     """Página de normativas"""
     st.markdown('<h2 style="color: #1e3c72; margin-bottom: 1rem;">📋 Normativas y Límites Permisibles</h2>', unsafe_allow_html=True)
     
-    from src.contaminant_catalog import CONTAMINANT_CATALOG
+    from contaminant_catalog import CONTAMINANT_CATALOG
     
     regulatory_data = []
     for key, data in CONTAMINANT_CATALOG.items():
